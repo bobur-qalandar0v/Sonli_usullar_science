@@ -167,8 +167,6 @@ export default function LagrangeInterpolation() {
             <h3 className="font-semibold">Yakuniy ifoda:</h3>
             <p className="mt-2 bg-blue-100 border border-blue-300 p-3 rounded">
               {formulaString} = <strong>{result.toFixed()}</strong>
-              <br />
-              {formulaString} = <strong>{result.toFixed()}</strong>
             </p>
           </div>
         </div>
