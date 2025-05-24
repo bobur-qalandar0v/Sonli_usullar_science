@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { routes } from "../constants/routes";
 import HeaderComponent from "./Header";
 import { MenuSideBar } from "../constants/menuSideBar";
+import Dashboard from "../pages/Dashboard/Dashboard";
 const { Sider, Content } = Layout;
 
 function Main() {
@@ -40,6 +41,7 @@ function Main() {
             }}
           >
             <Routes>
+              <Route path="/" element={<Navigate to={<Dashboard />} />} />
               {routes.map((item) => (
                 <Route path={item.path} element={item.element} key={item.id} />
               ))}
