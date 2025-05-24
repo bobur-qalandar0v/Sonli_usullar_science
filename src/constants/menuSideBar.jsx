@@ -7,10 +7,10 @@ import {
 
 export const MenuSideBar = [
   {
-    key: "/dashboard",
+    key: "/",
     icon: <BranchesOutlined />,
     label: "Asosiy",
-    path: "/dashboard",
+    path: "/",
   },
   {
     key: "/nyuton-interpolation-1",

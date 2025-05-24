@@ -2,18 +2,12 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import LagrangeInterpolation from "../pages/Lagranj/Lagranj";
 import NewtonInterpolation from "../pages/Nyuton1/Nyuton1";
 import Nyuton2 from "../pages/Nyuton2/Nyuton2";
-import {
-  DashboardOutlined,
-  BranchesOutlined,
-  ProductOutlined,
-  PieChartOutlined,
-} from "@ant-design/icons";
 
 export const routes = [
   {
     id: 1,
     element: <Dashboard />,
-    path: "/dashboard",
+    path: "/",
   },
   {
     id: 2,
