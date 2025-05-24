@@ -1,3 +1,4 @@
+import { Button, Form } from "antd";
 import React, { useState } from "react";
 
 export default function LagrangeInterpolation() {
@@ -17,6 +18,12 @@ export default function LagrangeInterpolation() {
     setPoints([...points, { x: "", y: "" }]);
   };
 
+  const removeLastPoint = () => {
+    if (points.length > 1) {
+      setPoints(points.slice(0, -1));
+    }
+  };
+
   const calculateLagrange = (x, points) => {
     const n = points.length;
     let sum = 0;
@@ -34,7 +41,7 @@ export default function LagrangeInterpolation() {
       for (let j = 0; j < n; j++) {
         if (j !== i) {
           const xj = parseFloat(points[j].x);
-          numeratorParts.push(`(x - ${xj})`);
+          numeratorParts.push(`(${x} - ${xj})`);
           denominatorParts.push(`(${xi} - ${xj})`);
           Li *= (x - xj) / (xi - xj);
         }
@@ -43,7 +50,7 @@ export default function LagrangeInterpolation() {
       const termValue = yi * Li;
       sum += termValue;
 
-      formulaParts.push(`${yi} × ${Li.toFixed()}`);
+      formulaParts.push(`${yi} × ${Li?.toFixed()}`);
 
       terms.push({
         i,
@@ -79,94 +86,149 @@ export default function LagrangeInterpolation() {
     setFormulaString(formulaStr);
   };
 
+  const handleClear = () => {
+    setPoints([{ x: "", y: "" }]);
+    setInputX("");
+    setResult(null);
+    setDetails([]);
+    setFormulaString("");
+  };
+
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">
-        Lagranj Interpolyatsiya Kalkulyatori
-      </h1>
-
-      {points.map((point, index) => (
-        <div key={index} className="flex gap-2 mb-2">
-          <input
-            type="number"
-            placeholder="x"
-            className="border p-1 w-1/2"
-            value={point.x}
-            onChange={(e) => handleChangePoint(index, "x", e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="y"
-            className="border p-1 w-1/2"
-            value={point.y}
-            onChange={(e) => handleChangePoint(index, "y", e.target.value)}
-          />
+    <div style={{ height: "100%", overflowY: "scroll" }}>
+      <h1>Lagranj Interpolyatsiya Kalkulyatori</h1>
+      <form style={{ display: "flex", alignItems: "start" }}>
+        <div
+          style={{ display: "flex", alignItems: "start", marginTop: "20px" }}
+        >
+          <div>
+            {points.map((point, index) => (
+              <div key={index} className="point__wrap">
+                <div className="x-input__wrap">
+                  <p style={{ fontSize: "16px" }}>
+                    X<sub>{index}</sub>
+                  </p>
+                  <input
+                    className="x-input"
+                    type="number"
+                    placeholder="x"
+                    value={point.x}
+                    required
+                    onChange={(e) =>
+                      handleChangePoint(index, "x", e.target.value)
+                    }
+                  />
+                </div>
+                <div className="y-input__wrap">
+                  <p style={{ fontSize: "16px" }}>
+                    Y<sub>{index}</sub>
+                  </p>
+                  <input
+                    className="y-input"
+                    type="number"
+                    placeholder="y"
+                    value={point.y}
+                    required
+                    onChange={(e) =>
+                      handleChangePoint(index, "y", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "11px",
+                margin: "10px 0",
+              }}
+            >
+              <p style={{ fontSize: "16px" }}>X</p>
+              <input
+                type="number"
+                placeholder="x ni kiriting"
+                value={inputX}
+                onChange={(e) => setInputX(e.target.value)}
+                style={{
+                  width: "110px",
+                  padding: "4px",
+                  fontSize: "16px",
+                  outline: "none",
+                }}
+              />
+            </div>
+          </div>
+          <div className="btns__wrap">
+            <Button
+              color="primary"
+              variant="outlined"
+              className="add__btn"
+              onClick={addPoint}
+            >
+              Nuqta qo‘shish
+            </Button>
+            {points.length > 1 ? (
+              <Button
+                color="danger"
+                variant="outlined"
+                className="remove__btn"
+                onClick={removeLastPoint}
+              >
+                Oxirgi nuqtani o'chirish
+              </Button>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-      ))}
-
-      <button
-        onClick={addPoint}
-        className="bg-blue-500 text-white px-3 py-1 rounded mb-4"
-      >
-        Nuqta qo‘shish
-      </button>
-
-      <div className="mb-4">
-        <input
-          type="number"
-          placeholder="x qiymatini kiriting"
-          className="border p-1 w-full"
-          value={inputX}
-          onChange={(e) => setInputX(e.target.value)}
-        />
-      </div>
-
-      <button
-        onClick={handleCalculate}
-        className="bg-green-600 text-white px-4 py-2 rounded"
-      >
-        Hisoblash
-      </button>
-
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <button
+            type="button"
+            className="calculate__btn"
+            onClick={() => handleCalculate()}
+          >
+            Hisoblash
+          </button>
+          <button
+            type="button"
+            className="clear__btn"
+            onClick={() => handleClear()}
+          >
+            Tozalash
+          </button>
+        </div>
+      </form>
       {result !== null && (
-        <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-2">Natija:</h2>
-          <p className="bg-yellow-100 border border-yellow-300 p-3 rounded mb-4">
+        <div>
+          <h2 style={{ fontSize: "24px" }}>Natija:</h2>
+          <p style={{ fontSize: "18px", marginTop: "6px" }}>
             <strong>
-              P({inputX}) ≈ {result.toFixed()}
+              P({inputX}) ≈ {result?.toFixed()}
             </strong>
           </p>
 
-          <div className="space-y-4">
+          <div>
             {details.map((term, index) => (
-              <div key={index} className="border p-3 rounded bg-gray-100">
-                <h3 className="font-semibold mb-1">
-                  L<sub>{term.i}</sub>(x):
-                </h3>
-                <p>
+              <div key={index}>
+                <p style={{ marginTop: "14px", fontSize: "18px" }}>
                   <strong>Formula:</strong> ({term.numerator}) / (
                   {term.denominator})
                 </p>
-                <p>
+                <p style={{ fontSize: "18px" }}>
                   <strong>
                     L<sub>{term.i}</sub>({inputX}):
                   </strong>{" "}
-                  {term.Li.toFixed()}
-                </p>
-                <p>
-                  <strong>
-                    {term.yi} × L<sub>{term.i}</sub>:
-                  </strong>{" "}
-                  {term.termValue.toFixed()}
+                  {term.Li?.toFixed()}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-6">
-            <h3 className="font-semibold">Yakuniy ifoda:</h3>
-            <p className="mt-2 bg-blue-100 border border-blue-300 p-3 rounded">
-              {formulaString} = <strong>{result.toFixed()}</strong>
+          <div style={{ marginTop: "14px" }}>
+            <h3 style={{ fontSize: "18px" }}>Yakuniy ifoda:</h3>
+            <p style={{ fontSize: "18px" }}>
+              {formulaString} = <strong>{result?.toFixed()}</strong>
             </p>
           </div>
         </div>

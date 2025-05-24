@@ -1,0 +1,73 @@
+.point__wrap {
+  width: 260px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  .x-input__wrap,
+  .y-input__wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 5px 0;
+  }
+
+  .x-input,
+  .y-input {
+    width: 60%;
+    font-size: 16px;
+    padding: 4px;
+    outline: none;
+  }
+}
+
+.btns__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add__btn {
+  padding: 8px 10px;
+  margin-top: 4px;
+  width: 175px;
+}
+
+.calculate__btn {
+  background-color: #1677ff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 20px;
+  border-radius: 6px;
+  margin-left: 10px;
+  margin-top: 25px;
+  border: 1px solid #1677ff;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #fff;
+    color: #1677ff;
+  }
+}
+
+.clear__btn {
+  background-color: red;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 20px;
+  border-radius: 6px;
+  margin-left: 10px;
+  margin-top: 5px;
+  border: 1px solid red;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #fff;
+    color: red;
+  }
+}
